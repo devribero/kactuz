@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import styles from './ProdutoSlider.module.css';
 import { supabase } from '../../lib/supabaseClient';
 import { useRouter } from 'next/navigation';
@@ -51,7 +51,7 @@ export default function ProdutoSlider() {
     }, 200);
   }
 
-  const showSlide = (index: number) => {
+  const showSlide = useCallback((index: number) => {
     let newIndex = index;
     if (index >= imagens.length) newIndex = 0;
     if (index < 0) newIndex = imagens.length - 1;
@@ -64,7 +64,7 @@ export default function ProdutoSlider() {
       const slideWidth = slideElement.clientWidth;
       slidesContainer.style.transform = `translateX(-${slideWidth * newIndex}px)`;
     }
-  };
+  }, [imagens.length]);
 
   const changeSlide = (n: number) => showSlide(slideIndex + n);
 
@@ -78,7 +78,7 @@ export default function ProdutoSlider() {
     else if (endX - startX.current > 50) changeSlide(-1);
   };
 
-  useEffect(() => { showSlide(slideIndex); }, []);
+  useEffect(() => { showSlide(slideIndex); }, [slideIndex, showSlide]);
 
   const handleAddToCart = async () => {
     if (!userId) {
@@ -93,7 +93,7 @@ export default function ProdutoSlider() {
     // Adiciona ao carrinho
     const { error } = await supabase.from('Tamanhos').insert([{
       id_user: userId,
-      produto: 'Camiseta Boxy "Lov Cross"',
+      produto: 'Camiseta Boxy &ldquo;Lov Cross&rdquo;',
       preco: 90,
       tamanho: selectedSize
     }]);
@@ -206,7 +206,7 @@ export default function ProdutoSlider() {
             </div>
 
             <div className={styles.productDetails}>
-              <h1 className={styles.productTitle}>Camiseta Boxy "Lov Cross"</h1>
+              <h1 className={styles.productTitle}>Camiseta Boxy &ldquo;Lov Cross&rdquo;</h1>
               <h2 className={styles.price}>R$ 90,00</h2>
 
               <div className={styles.sizes}>

@@ -29,9 +29,8 @@ const DropdownMenuContent = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement> & {
     align?: "start" | "center" | "end"
-    forceMount?: boolean
   }
->(({ className, align = "start", forceMount = false, ...props }, ref) => (
+>(({ className, align = "start", ...props }, ref) => (
   <div
     ref={ref}
     className={cn(

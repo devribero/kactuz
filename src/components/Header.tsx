@@ -6,9 +6,10 @@ import styles from "./Header.module.css";
 import { useEffect, useState } from "react";
 import { supabase } from "../../lib/supabaseClient";
 import { useRouter } from "next/navigation"; // importa aqui
+import { User, Session } from '@supabase/supabase-js';
 
 export default function Header() {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAvatarMenuOpen, setIsAvatarMenuOpen] = useState(false);
   const [cartCount, setCartCount] = useState(0);
@@ -25,7 +26,7 @@ export default function Header() {
 
     getUser();
 
-    const { data: listener } = supabase.auth.onAuthStateChange((_event: any, session: any) => {
+    const { data: listener } = supabase.auth.onAuthStateChange((_event: string, session: Session | null) => {
       setUser(session?.user ?? null);
       if (session?.user) {
         fetchCartCount(session.user.id);
