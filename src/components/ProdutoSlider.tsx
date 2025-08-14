@@ -181,6 +181,33 @@ export default function ProdutoSlider() {
         </button>
       </div>
 
+      {/* ========================================================== */}
+      {/* ===== INFORMAÇÕES DO PRODUTO PARA MOBILE (SEÇÃO ADICIONADA) ===== */}
+      {/* ========================================================== */}
+      <div className={styles.mobileProductInfo}>
+        <div className={styles.productDetails}>
+          <h1 className={styles.productTitle}>Camiseta Boxy &ldquo;Lov Cross&rdquo;</h1>
+          <h2 className={styles.price}>R$ 90,00</h2>
+
+          <div className={styles.sizes}>
+              {['P', 'M', 'G', 'GG'].map((size) => (
+                <button
+                  key={size}
+                  className={`${styles.sizeButton} ${selectedSize === size ? styles.activeSizeButton : ''}`}
+                  onClick={() => setSelectedSize(size)}
+                >
+                  {size}
+                </button>
+              ))}
+          </div>
+
+          <button className={styles.buyButton} onClick={handleAddToCart}>
+            Adicionar ao Carrinho
+          </button>
+        </div>
+      </div>
+
+
       {/* Desktop View */}
       <div className={styles.desktopView}>
         <div className={styles.productContainer}>
@@ -205,6 +232,7 @@ export default function ProdutoSlider() {
               ))}
             </div>
 
+            {/* O mesmo bloco de detalhes que adicionamos para o mobile */}
             <div className={styles.productDetails}>
               <h1 className={styles.productTitle}>Camiseta Boxy &ldquo;Lov Cross&rdquo;</h1>
               <h2 className={styles.price}>R$ 90,00</h2>
